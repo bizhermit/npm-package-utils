@@ -11,6 +11,9 @@
   "homepage": "https://bizhermit.com",
   "license": "MIT",
   "bin": "cli",
+  "files": [
+    "cli.js"
+  ],
   "devDependencies": {
     "@types/node": "^18.6.1",
     "typescript": "^4.7.4"

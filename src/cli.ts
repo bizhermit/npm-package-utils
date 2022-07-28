@@ -86,6 +86,7 @@ const init = () => {
     destPkg.main = "dist";
     files.push("dist");
   }
+  if (destPkg.files == null) destPkg.files = files;
   destPkg.keywords = srcPkg.keywords ?? destPkg.keywords ?? [];
 
   writeFileSync(destPkgPath, JSON.stringify(sortPackageJsonProps(destPkg), null, 2));
