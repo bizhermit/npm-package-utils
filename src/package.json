@@ -10,7 +10,7 @@
   "author": "Senda Ryoichi <rsenda@bizhermit.com> (https://bizhermit.com)",
   "homepage": "https://bizhermit.com",
   "license": "MIT",
-  "bin": "cli",
+  "bin": "cli.js",
   "files": [
     "cli.js"
   ],

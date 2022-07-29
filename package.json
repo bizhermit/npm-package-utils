@@ -1,6 +1,6 @@
 {
   "name": "@bizhermit/npm-package-utils",
-  "version": "0.0.0-rc.0",
+  "version": "0.0.0-rc.1",
   "description": "npm package utils",
   "repository": {
     "type": "git",

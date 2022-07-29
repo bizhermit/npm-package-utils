@@ -70,10 +70,10 @@ const init = () => {
   destPkg.license = srcPkg.license ?? destPkg.license ?? "MIT";
   const files: Array<string> = [];
   if (existsSync(path.join(cwd, "src/bin/cli.ts")) || existsSync(path.join(cwd, "src/bin/cli.js"))) {
-    destPkg.bin = "bin/cli";
+    destPkg.bin = "bin/cli.js";
     files.push("bin");
   } else if (existsSync(path.join(cwd, "src/cli.ts")) || existsSync(path.join(cwd, "src/cli.js"))) {
-    destPkg.bin = "cli";
+    destPkg.bin = "cli.js";
     files.push("cli.js");
   }
   if (existsSync(path.join(cwd, "src/dist/index.ts")) || existsSync(path.join(cwd, "src/dist/index.js"))) {
