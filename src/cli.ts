@@ -94,12 +94,14 @@ const init = () => {
 
 const pack = () => {
   const rootPkg = JSON.parse(readFileSync(path.join(cwd, "package.json")).toString());
-  const npmPkg = JSON.parse(readFileSync(path.join(cwd, "src/package.json")).toString());
+  const npmPkgPath = path.join(cwd, "src/package.json");
+  const npmPkg = JSON.parse(readFileSync(npmPkgPath).toString());
   npmPkg.version = rootPkg.version || "0.0.0-alpha.0";
   const destDirPath = path.join(cwd, "package");
   if (!existsSync(destDirPath)) {
     mkdirSync(destDirPath, { recursive: true });
   }
+  writeFileSync(npmPkgPath, JSON.stringify(npmPkg, null, 2));
   writeFileSync(path.join(destDirPath, "package.json"), JSON.stringify(sortPackageJsonProps(npmPkg), null, 2));
   const srcCreditPath = path.join(cwd, "CREDIT");
   if (existsSync(srcCreditPath)) copyFileSync(srcCreditPath, path.join(destDirPath, "CREDIT"));
