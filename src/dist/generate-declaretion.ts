@@ -28,7 +28,7 @@ const generateDeclaretionFile = (cwd: string, ignoreFileNames: Array<string> = [
       const defaultExportName = fileContents.match(/export default ([A-Za-z][A-Za-z0-9$_]*)/)?.[1];
       if (defaultExportName == null || defaultExportName.length === 0) return;
       if (contents.length > 0) contents += "\n";
-      contents += `declare module "${baseName}/${relativePathName}" {\n  const ${defaultExportName}: "${relativePathName}";\n  export default ${defaultExportName};\n}`;
+      contents += `declare module "${baseName}/${relativePathName}" {\n  const ${defaultExportName}: typeof import("./${relativePathName}");\n  // tslint:disable-next-line:export-just-namespace\n  export = ${defaultExportName};\n}`;
     });
   };
   impl("");
