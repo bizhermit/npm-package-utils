@@ -2,8 +2,8 @@
 
 import path from "path";
 import generateDeclaretionFile from "../dist/generate-declaretion";
-import init from "../dist/init";
-import pack from "../dist/pack";
+import initializeNpmPackageJson from "../dist/init";
+import packNpmPackage from "../dist/pack";
 
 let cwd = process.cwd();
 const argPath = process.argv[3];
@@ -17,10 +17,10 @@ process.stdout.write(`npm-package-utils:${command || "(unknown)"} ${cwd}\n`);
 
 switch (command) {
   case "init":
-    init(cwd);
+    initializeNpmPackageJson(cwd);
     break;
   case "pack":
-    pack(cwd);
+    packNpmPackage(cwd);
     break;
   case "d.ts":
     let ignoreFileNames: Array<string> = [];

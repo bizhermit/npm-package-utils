@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "fs";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import path from "path";
 
 const generateDeclaretionFile = (cwd: string, ignoreFileNames: Array<string> = []) => {
@@ -32,7 +32,7 @@ const generateDeclaretionFile = (cwd: string, ignoreFileNames: Array<string> = [
     });
   };
   impl("");
-  console.log(contents);
+  writeFileSync(path.join(cwd, "src", "index.d.ts"), contents);
 };
 
 export default generateDeclaretionFile;

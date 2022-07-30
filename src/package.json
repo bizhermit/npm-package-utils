@@ -1,7 +1,11 @@
 {
   "name": "@bizhermit/npm-package-utils",
-  "version": "0.0.0-rc.3",
+  "version": "0.0.0-rc.4",
   "description": "npm package utils",
+  "keywords": [
+    "bizhermit",
+    "npm package"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/bizhermit/npm-package-utils.git"
@@ -10,16 +14,13 @@
   "author": "Senda Ryoichi <rsenda@bizhermit.com> (https://bizhermit.com)",
   "homepage": "https://bizhermit.com",
   "license": "MIT",
-  "bin": "cli.js",
+  "bin": "bin/cli.js",
+  "types": "index.d.ts",
   "files": [
     "cli.js"
   ],
   "devDependencies": {
     "@types/node": "^18.6.1",
     "typescript": "^4.7.4"
-  },
-  "keywords": [
-    "bizhermit",
-    "npm package"
-  ]
+  }
 }

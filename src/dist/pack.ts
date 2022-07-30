@@ -2,7 +2,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import path from "path";
 import { sortPackageJsonProps } from "./utils";
 
-const pack = (cwd: string) => {
+const packNpmPackage = (cwd: string) => {
   const destDirPath = path.join(cwd, "package");
   const rootPkg = JSON.parse(readFileSync(path.join(cwd, "package.json")).toString());
   const npmPkgPath = path.join(cwd, "src/package.json");
@@ -26,4 +26,4 @@ const pack = (cwd: string) => {
   if (existsSync(srcReadmePath)) copyFileSync(srcReadmePath, path.join(destDirPath, "README.md"));
 };
 
-export default pack;
+export default packNpmPackage;

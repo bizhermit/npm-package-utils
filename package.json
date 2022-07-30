@@ -1,6 +1,6 @@
 {
   "name": "@bizhermit/npm-package-utils",
-  "version": "0.0.0-rc.3",
+  "version": "0.0.0-rc.4",
   "description": "npm package utils",
   "repository": {
     "type": "git",
@@ -12,10 +12,7 @@
   "license": "MIT",
   "scripts": {
     "license": "npx rimraf CREDIT && npx license -o CREDIT --returnError",
-    "build": "npm run license && npx rimraf package && npx tsc -p src/tsconfig.json && npx minifier ./package && node package/cli pack",
-    "dev:init": "node package/cli init",
-    "dev:pack": "node package/cli pack",
-    "dev:error": "node package/cli"
+    "build": "npm run license && npx rimraf package && npx tsc -p src/tsconfig.json && npx rimraf package/bin/cli.d.ts && npx minifier ./package && node package/bin/cli d.ts && node package/bin/cli pack"
   },
   "devDependencies": {
     "@bizhermit/license": "^1.0.10",

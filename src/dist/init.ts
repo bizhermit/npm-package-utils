@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { sortPackageJsonProps } from "./utils";
 
-const init = (cwd: string) => {
+const initializeNpmPackageJson = (cwd: string) => {
   const destPkgPath = path.join(cwd, "src/package.json");
   let destPkg: { [key: string]: any } = {};
   if (existsSync(destPkgPath)) {
@@ -50,4 +50,4 @@ const init = (cwd: string) => {
   writeFileSync(destPkgPath, JSON.stringify(sortPackageJsonProps(destPkg), null, 2));
 };
 
-export default init;
+export default initializeNpmPackageJson;
