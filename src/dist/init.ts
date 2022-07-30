@@ -26,23 +26,27 @@ const initializeNpmPackageJson = (cwd: string) => {
   destPkg.author = srcPkg.author ?? destPkg.author ?? "";
   destPkg.homepage = srcPkg.homepage ?? destPkg.homepage ?? "";
   destPkg.license = srcPkg.license ?? destPkg.license ?? "MIT";
-  const files: Array<string> = [];
+  const files: Array<string> = destPkg.files ?? [];
   if (existsSync(path.join(cwd, "src/bin/cli.ts")) || existsSync(path.join(cwd, "src/bin/cli.js"))) {
     destPkg.bin = "bin/cli.js";
-    files.push("bin");
+    if (files.indexOf("bin") < 0) files.push("bin");
   } else if (existsSync(path.join(cwd, "src/cli.ts")) || existsSync(path.join(cwd, "src/cli.js"))) {
     destPkg.bin = "cli.js";
-    files.push("cli.js");
+    if (files.indexOf("cli.js") < 0) files.push("cli.js");
+  } else {
+    delete destPkg.bin;
   }
   if (existsSync(path.join(cwd, "src/dist/index.ts")) || existsSync(path.join(cwd, "src/dist/index.js"))) {
     destPkg.main = "dist/index";
-    files.push("dist");
+    if (files.indexOf("dist") < 0) files.push("dist");
   } else if (existsSync(path.join(cwd, "src/index.ts")) || existsSync(path.join(cwd, "src/index.js"))) {
     destPkg.main = "index";
-    files.push("index.js");
+    if (files.indexOf("index.js") < 0) files.push("index.js");
   } else if (existsSync(path.join(cwd, "src/dist"))) {
-    destPkg.main = "dist";
-    files.push("dist");
+    delete destPkg.main;
+    if (files.indexOf("dist") < 0) files.push("dist");
+  } else {
+    delete destPkg.main;
   }
   if (destPkg.files == null) destPkg.files = files;
   destPkg.keywords = srcPkg.keywords ?? destPkg.keywords ?? [];
