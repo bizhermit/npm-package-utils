@@ -18,7 +18,8 @@
   "types": "index.d.ts",
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "devDependencies": {
     "@types/node": "^18.6.1",

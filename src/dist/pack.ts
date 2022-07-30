@@ -12,6 +12,9 @@ const packNpmPackage = (cwd: string) => {
   if (existsSync(declaretionPath)) {
     copyFileSync(declaretionPath, path.join(destDirPath, "index.d.ts"));
     npmPkg.types = "index.d.ts";
+    if ((npmPkg.files ?? []).length > 0 && npmPkg.files.indexOf("index.d.ts") < 0) {
+      npmPkg.files.push("index.d.ts");
+    }
   }
   if (!existsSync(destDirPath)) {
     mkdirSync(destDirPath, { recursive: true });
