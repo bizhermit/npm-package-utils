@@ -1,12 +1,14 @@
 {
   "name": "@bizhermit/npm-package-utils",
-  "version": "0.0.0-rc.6",
+  "version": "0.0.0-rc.7",
   "description": "npm package utils",
   "repository": {
     "type": "git",
     "url": "https://github.com/bizhermit/npm-package-utils.git"
   },
-  "bugs": "https://github.com/bizhermit/npm-package-utils/issues",
+  "bugs": {
+    "url": "https://github.com/bizhermit/npm-package-utils/issues"
+  },
   "author": "Senda Ryoichi <rsenda@bizhermit.com> (https://bizhermit.com)",
   "homepage": "https://bizhermit.com",
   "license": "MIT",

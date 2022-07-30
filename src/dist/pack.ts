@@ -8,12 +8,21 @@ const packNpmPackage = (cwd: string) => {
   const npmPkgPath = path.join(cwd, "src/package.json");
   const npmPkg = JSON.parse(readFileSync(npmPkgPath).toString());
   npmPkg.version = rootPkg.version || "0.0.0-alpha.0";
-  const declaretionPath = path.join(cwd, "src/index.d.ts");
+  let declaretionPath = path.join(cwd, "src/index.d.ts");
   if (existsSync(declaretionPath)) {
     copyFileSync(declaretionPath, path.join(destDirPath, "index.d.ts"));
     npmPkg.types = "index.d.ts";
     if ((npmPkg.files ?? []).length > 0 && npmPkg.files.indexOf("index.d.ts") < 0) {
       npmPkg.files.push("index.d.ts");
+    }
+  } else {
+    declaretionPath = path.join(cwd, "src/dist/index.d.ts");
+    if (existsSync(declaretionPath)) {
+      copyFileSync(declaretionPath, path.join(destDirPath, "dist/index.d.ts"));
+      npmPkg.types = "dist/index.d.ts";
+      if ((npmPkg.files ?? []).length > 0 && npmPkg.files.indexOf("dist") < 0) {
+        npmPkg.files.push("dist");
+      }
     }
   }
   if (!existsSync(destDirPath)) {
