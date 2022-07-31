@@ -1,0 +1,17 @@
+{
+  "name": "dev",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init": "node bin/cli init",
+    "pack": "node bin/cli pack",
+    "d.ts": "node bin/cli d.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.6.3",
+    "typescript": "^4.7.4"
+  }
+}
