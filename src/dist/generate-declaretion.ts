@@ -1,15 +1,16 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import path from "path";
 
-const generateDeclaretionFile = (cwd: string, ignoreFileNames: Array<string> = []) => {
+const generateDeclaretionFile = (cwd: string, options?: { ignoreFileNames: Array<string>; quiet?: boolean; }) => {
   const rootPkg = JSON.parse(readFileSync(path.join(cwd, "package.json")).toString());
   const baseName = rootPkg.name;
   let contents = "";
   const ignoreFiles = [
     "node_modules",
     "cli.ts",
-    ...ignoreFileNames,
+    ...(options?.ignoreFileNames ?? []),
   ];
+  const writeLog = options?.quiet !== true;
   const impl = (relativePath: string) => {
     const files = readdirSync(path.join(cwd, "src", relativePath));
     files.forEach(file => {
@@ -20,15 +21,19 @@ const generateDeclaretionFile = (cwd: string, ignoreFileNames: Array<string> = [
         return;
       }
       const ext = path.extname(file);
-      if (ext !== ".ts") return;
+      if (ext !== ".ts" && ext !== ".tsx") return;
       if (file.endsWith("d.ts")) return;
       const modName = file.substring(0, file.length - ext.length);
       const relativePathName = `${path.join(relativePath, modName).replace(/\\/g, "/").replace(/\/\//g, "/")}`;
       const fileContents = readFileSync(path.join(cwd, "src", relativePath, file)).toString();
       const defaultExportName = fileContents.match(/export default ([A-Za-z][A-Za-z0-9$_]*)/)?.[1];
-      if (defaultExportName == null || defaultExportName.length === 0) return;
+      if (defaultExportName == null || defaultExportName.length === 0) {
+        if (writeLog) process.stdout.write(`[skip] ${file}\n`);
+        return;
+      }
       if (contents.length > 0) contents += "\n";
       contents += `declare module "${baseName}/${relativePathName}" {\n  const ${defaultExportName}: typeof import("./${relativePathName}");\n  // tslint:disable-next-line:export-just-namespace\n  export = ${defaultExportName};\n}`;
+      if (writeLog) process.stdout.write(`- ${file} >> ${defaultExportName}\n`);
     });
   };
   impl("");

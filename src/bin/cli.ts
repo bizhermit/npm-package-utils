@@ -7,7 +7,7 @@ import packNpmPackage from "../dist/pack";
 
 let cwd = process.cwd();
 const argPath = process.argv[3];
-if (argPath) {
+if (argPath && !argPath.startsWith("-")) {
   if (argPath[1] === ":" || argPath.startsWith("\\\\")) cwd = argPath;
   else cwd = path.join(cwd, argPath);
 }
@@ -25,13 +25,14 @@ switch (command) {
   case "d.ts":
     let ignoreFileNames: Array<string> = [];
     const ignoreFlagIndex = process.argv.findIndex(arg => arg === "--ignore");
+    const quiet = process.argv.findIndex(arg => arg === "-quiet");
     if (ignoreFlagIndex > 0) {
       const ignoreFileNamesArg = process.argv[ignoreFlagIndex + 1];
       if (ignoreFileNamesArg?.length > 0) {
         ignoreFileNames = ignoreFileNamesArg.split(/,/);
       }
     }
-    generateDeclaretionFile(cwd, ignoreFileNames);
+    generateDeclaretionFile(cwd, { ignoreFileNames, quiet: quiet >= 0 });
     break;
   default:
     process.stderr.write(`unknown command\n`);
