@@ -23,6 +23,18 @@ const packNpmPackage = (cwd: string) => {
       if ((npmPkg.files ?? []).length > 0 && npmPkg.files.indexOf("dist") < 0) {
         npmPkg.files.push("dist");
       }
+    } else {
+      if (existsSync(path.join(cwd, "package/index.d.ts"))) {
+        npmPkg.types = "index.d.ts";
+        if ((npmPkg.files ?? []).length > 0 && npmPkg.files.indexOf("index.d.ts") < 0) {
+          npmPkg.files.push("index.d.ts");
+        }
+      } else if (path.join(cwd, "package/dist/index.d.ts")) {
+        npmPkg.types = "dist/index.d.ts";
+        if ((npmPkg.files ?? []).length > 0 && npmPkg.files.indexOf("dist") < 0) {
+          npmPkg.files.push("dist");
+        }
+      }
     }
   }
   if (!existsSync(destDirPath)) {
