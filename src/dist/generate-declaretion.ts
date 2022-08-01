@@ -1,9 +1,18 @@
-import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import path from "path";
+import { isAbsPath } from "./utils";
 
-const generateDeclaretionFile = (cwd: string, options?: { ignoreFileNames: Array<string>; quiet?: boolean; }) => {
+const generateDeclaretionFile = (cwd: string, options?: {
+  ignoreFileNames: Array<string>;
+  quiet?: boolean;
+  outDir?: string;
+  outName?: string;
+}) => {
   const rootPkg = JSON.parse(readFileSync(path.join(cwd, "package.json")).toString());
   const baseName = rootPkg.name;
+  let outDir = "";
+  if (isAbsPath(options?.outDir)) outDir = options?.outDir || "";
+  else outDir = path.join(cwd, options?.outDir ?? "src");
   let contents = "";
   const ignoreFiles = [
     "node_modules",
@@ -37,7 +46,10 @@ const generateDeclaretionFile = (cwd: string, options?: { ignoreFileNames: Array
     });
   };
   impl("");
-  writeFileSync(path.join(cwd, "src", "index.d.ts"), contents);
+  if (!existsSync(outDir)) {
+    mkdirSync(outDir, { recursive: true });
+  }
+  writeFileSync(path.join(outDir, options?.outName || "index.d.ts"), contents);
 };
 
 export default generateDeclaretionFile;

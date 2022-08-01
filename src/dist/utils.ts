@@ -31,3 +31,8 @@ export const sortPackageJsonProps = (pkg: { [key: string]: any }) => {
   });
   return sorted;
 };
+
+export const isAbsPath = (str: string | undefined | null) => {
+  if (str == null) return false;
+  return str[1] === ":" || str.startsWith("\\\\");
+};

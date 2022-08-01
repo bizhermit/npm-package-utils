@@ -6,7 +6,7 @@
   "scripts": {
     "init": "node bin/cli init",
     "pack": "node bin/cli pack",
-    "d.ts": "node bin/cli d.ts -quiet"
+    "d.ts": "node bin/cli d.ts --quiet --outDir ../package --outName test.d.ts"
   },
   "author": "",
   "license": "MIT",

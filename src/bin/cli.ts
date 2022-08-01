@@ -1,14 +1,16 @@
 #! /usr/bin/env node
 
+import { getKeyArg, hasKeyArg } from "@bizhermit/cli-utils";
 import path from "path";
 import generateDeclaretionFile from "../dist/generate-declaretion";
 import initializeNpmPackageJson from "../dist/init";
 import packNpmPackage from "../dist/pack";
+import { isAbsPath } from "../dist/utils";
 
 let cwd = process.cwd();
 const argPath = process.argv[3];
 if (argPath && !argPath.startsWith("-")) {
-  if (argPath[1] === ":" || argPath.startsWith("\\\\")) cwd = argPath;
+  if (isAbsPath(argPath)) cwd = argPath;
   else cwd = path.join(cwd, argPath);
 }
 
@@ -23,16 +25,12 @@ switch (command) {
     packNpmPackage(cwd);
     break;
   case "d.ts":
-    let ignoreFileNames: Array<string> = [];
-    const ignoreFlagIndex = process.argv.findIndex(arg => arg === "--ignore");
-    const quiet = process.argv.findIndex(arg => arg === "-quiet");
-    if (ignoreFlagIndex > 0) {
-      const ignoreFileNamesArg = process.argv[ignoreFlagIndex + 1];
-      if (ignoreFileNamesArg?.length > 0) {
-        ignoreFileNames = ignoreFileNamesArg.split(/,/);
-      }
-    }
-    generateDeclaretionFile(cwd, { ignoreFileNames, quiet: quiet >= 0 });
+    generateDeclaretionFile(cwd, {
+      ignoreFileNames: getKeyArg("--ignore")?.split(",") ?? [],
+      quiet: hasKeyArg("--quiet"),
+      outDir: getKeyArg("--outDir"),
+      outName: getKeyArg("--outName"),
+    });
     break;
   default:
     process.stderr.write(`unknown command\n`);

@@ -1,6 +1,6 @@
 {
   "name": "@bizhermit/npm-package-utils",
-  "version": "0.0.0-rc.9",
+  "version": "0.0.0-rc.10",
   "description": "npm package utils",
   "keywords": [
     "bizhermit",
@@ -23,6 +23,9 @@
     "dist",
     "index.d.ts"
   ],
+  "dependencies": {
+    "@bizhermit/cli-utils": "^1.0.0-rc.0"
+  },
   "devDependencies": {
     "@types/node": "^18.6.1",
     "typescript": "^4.7.4"
